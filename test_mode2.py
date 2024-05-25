@@ -105,8 +105,11 @@ class Mode2Tests(TestCase):
             cur_guardians[site.get_name()] = max(0, guardians - sent_adventurers)
             # Score
             score = 2.5 * (100 - sent_adventurers) + received
+            # print(score,expected)
             self.assertEqual(score, expected)
+        # print("hahahahahahah")
         nav.add_sites([Land("F", 900, 150)])
+        # print(nav.land_sites)
         cur_guardians["F"] = 150
         cur_gold["F"] = 900
         results_2 = nav.simulate_day(100)
@@ -128,4 +131,6 @@ class Mode2Tests(TestCase):
             cur_guardians[site.get_name()] = max(0, guardians - sent_adventurers)
             # Score
             score = 2.5 * (100 - sent_adventurers) + received
+            # print(site)
+            # print(score, expected)
             self.assertEqual(score, expected)

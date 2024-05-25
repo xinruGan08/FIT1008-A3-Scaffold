@@ -11,30 +11,40 @@ class Mode1Navigator:
     def __init__(self, sites: list[Land], adventurers: int) -> None:
         """
         Student-TODO: Best/Worst Case
+        Worst Case: O(nlogn) where n is the number of sites
         """
         site_storage = BinarySearchTree()
         for site in sites:
-            site_storage[-1 * site.get_gold()/site.get_guardians()] = site
+            site_storage[site.get_guardians() / site.get_gold()] = site
         self.sites = site_storage
         self.adventurers = adventurers
 
     def select_sites(self) -> list[tuple[Land, int]]:
         """
-        Student-TODO: Best/Worst Case
+        A function that selects the land sites you desire to attack.
+        Defining N = number of sites
+        Best Case: O(log N) 
+        Worst Case: O(N)
         """
         return_list = []
         remaining_adventures = self.adventurers
-        for land in BSTInOrderIterator(self.sites.root):
+        for land in self.sites:
             land = land.item
             if land.get_guardians() > 0 and remaining_adventures > 0:
-                sent_guardians = land.get_guardians() if land.get_guardians() < remaining_adventures else remaining_adventures
+                sent_guardians = land.get_guardians() if land.get_guardians() <= remaining_adventures else remaining_adventures
                 remaining_adventures -= sent_guardians
                 return_list.append((land,sent_guardians))
+            else:
+                break
         return return_list
+
 
     def select_sites_from_adventure_numbers(self, adventure_numbers: list[int]) -> list[float]:
         """
         Student-TODO: Best/Worst Case
+        Defining N = number of sites
+        Defining A = length of adventure_numbers
+        Worst Case: O(nlogn) where n is the number of sites
         """
         original_adventures = self.adventurers
         return_list = []
